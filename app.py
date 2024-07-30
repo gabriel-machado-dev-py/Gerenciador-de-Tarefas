@@ -56,7 +56,6 @@ def insert_task(task, description, status):
     print(GREEN + f"Tarefa '{task}' adicionada com sucesso!" + RESET)
     print(BLUE + "Descrição da tarefa: " + description + RESET)
     
-
 # Função para visualizar tarefas
 def view_tasks():
     cursor.execute('''

@@ -1,0 +1,9 @@
+colorama==0.4.6
+cx_Freeze==7.2.0
+cx_Logging==3.2.0
+lief==0.14.1
+markdown-it-py==3.0.0
+mdurl==0.1.2
+Pygments==2.18.0
+rich==13.7.1
+tqdm==4.66.4
