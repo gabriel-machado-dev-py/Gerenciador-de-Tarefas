@@ -1,4 +1,7 @@
 from tqdm import tqdm
+# from rich import print
+from rich.table import Table
+from rich.console import Console
 from time import sleep
 import sqlite3
 
@@ -34,7 +37,7 @@ cursor = conn.cursor()
 
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS tasks (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY,
     tarefa TEXT NOT NULL,
     descricao TEXT NOT NULL,
     status TEXT NOT NULL
@@ -57,9 +60,19 @@ def view_tasks():
     SELECT * FROM tasks
     ''')
     tasks = cursor.fetchall()
-    print(CYAN + BOLD + "Tarefas Cadastradas:" + RESET)
+    
+    table = Table(title="Tarefas Cadastradas")
+    table.add_column("ID", justify="right", style="cyan", no_wrap=True)
+    table.add_column("Tarefa", style="magenta")
+    table.add_column("Descrição", style="green")
+    table.add_column("Status", style="blue")
+    
     for task in tasks:
-        print(f"ID: {task[0]} - Tarefa: {task[1]} - Descrição: {task[2]} - Status: {task[3]}")
+        table.add_row(str(task[0]), task[1], task[2], task[3])
+    
+    console = Console()
+    console.print(table)
+    
     return tasks
 
 # Função para marcar tarefa como concluída
@@ -92,7 +105,7 @@ def main_menu():
         print("4 - Remover Tarefa")
         print("5 - Sair")
         
-        option = input("Digite a opção desejada: ")
+        option = input("Digite a opção desejada: \n")
         
         if option == "1":
             task = input("Digite a tarefa: ")
@@ -117,6 +130,7 @@ def main_menu():
             remove_task(task_id)
         elif option == "5":
             print(YELLOW + "Saindo do programa..." + RESET)
+            print(YELLOW + "Até mais!" + RESET)
             break
         else:
             print(RED + "Opção inválida!" + RESET)
