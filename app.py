@@ -7,9 +7,12 @@ from time import sleep
 import sqlite3
 
 # Simulate a loading bar
-print("Carregando programa:")
+print("Carregando programa...\n")
+print("Aguarde...\n")
+sleep(1.5)
+
 for _ in tqdm(range(100), desc="Carregando", ncols=75):
-    sleep(0.05)
+    sleep(0.03)
 
 
 RED = '\033[91m'
@@ -30,8 +33,10 @@ print(CYAN + BOLD + r'''
                     _|_|_|      -|__|       |__|       .  |           |  
                                                                               
                                                                            
-                           Programa Gerenciamento de Tarefas 
+                           Programa Gerenciador de Tarefas 
 ''' + RESET)
+
+print(CYAN + 'A programação é uma arte, assim como a pintura ou a escultura, que exige inspiração e criatividade para resolver problemas' + RESET + '\n') 
 
 conn = sqlite3.connect('tasks.db')
 cursor = conn.cursor()
