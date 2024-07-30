@@ -25,3 +25,10 @@
 
   - `sqlite3` -> Armazenar os arquivos
   - `rich` -> Para personalização do terminal
+
+
+# Como usar: 
+   - Git clone este repositório
+   - Abra a pasta build no explorer 
+   - Entre na pasta exe.win-amd64-3.11
+   - Execute o arquivo: app com o icone de to-do list
