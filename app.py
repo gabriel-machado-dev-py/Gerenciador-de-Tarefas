@@ -6,15 +6,6 @@ from rich.console import Console
 from time import sleep
 import sqlite3
 
-# Simulate a loading bar
-print("Carregando programa...\n")
-print("Aguarde...\n")
-sleep(1.5)
-
-for _ in tqdm(range(100), desc="Carregando", ncols=75):
-    sleep(0.03)
-
-
 RED = '\033[91m'
 GREEN = '\033[92m'
 YELLOW = '\033[93m'
@@ -23,6 +14,14 @@ MAGENTA = '\033[95m'
 CYAN = '\033[96m'
 RESET = '\033[0m'
 BOLD = '\033[1m'
+
+# Simulate a loading bar
+print(f"{GREEN}Carregando programa...{RESET}")
+print(f"{YELLOW + BOLD}Aguarde!{RESET}\n")
+sleep(1.5)
+
+for _ in tqdm(range(100), desc="Carregando", ncols=75):
+    sleep(0.03)
 
 print(CYAN + BOLD + r'''
                                                           _____                         
@@ -36,7 +35,7 @@ print(CYAN + BOLD + r'''
                            Programa Gerenciador de Tarefas 
 ''' + RESET)
 
-print(CYAN + 'A programação é uma arte, assim como a pintura ou a escultura, que exige inspiração e criatividade para resolver problemas' + RESET + '\n') 
+print(CYAN + 'A programação é uma arte, assim como a pintura ou a escultura, que exige inspiração e criatividade para resolver problemas.' + RESET + '\n') 
 
 conn = sqlite3.connect('tasks.db')
 cursor = conn.cursor()
@@ -108,14 +107,14 @@ def main_menu():
     while True:
         # 1.Menu de opções
         print(CYAN + BOLD + "Menu de Opções:" + RESET)
-        print("1 - Adicionar Tarefa")
-        print("2 - Visualizar Tarefas")
-        print("3 - Marcar Tarefa como Concluída")
-        print("4 - Remover Tarefa")
-        print("5 - Sair")
+        print(GREEN + "1 - Adicionar Tarefa" + RESET)
+        print(GREEN + "2 - Visualizar Tarefas" + RESET)
+        print(GREEN + "3 - Marcar Tarefa como Concluída" + RESET)
+        print(GREEN + "4 - Remover Tarefa" + RESET)
+        print(RED + "5 - Sair" + RESET)
         
-        option = input("Digite a opção desejada: \n")
-        1
+        option = input("Digite a opção desejada: ")
+        
         if option == "1":
             os.system('cls' if os.name == 'nt' else 'clear')
             
@@ -153,6 +152,7 @@ def main_menu():
         elif option == "5":
             print(YELLOW + "Saindo do programa..." + RESET)
             print(YELLOW + "Até mais!" + RESET)
+            sleep(2)
             break
         else:
             print(RED + "Opção inválida!" + RESET)

@@ -25,10 +25,15 @@
 
   - `sqlite3` -> Armazenar os arquivos
   - `rich` -> Para personalização do terminal
+  - `tqdm` -> Para personalização
+  - `os` -> Para limpar o terminal 
 
 
-# Como usar: 
-   - Git clone este repositório
-   - Abra a pasta build no explorer 
-   - Entre na pasta exe.win-amd64-3.11
-   - Execute o arquivo: app com o icone de to-do list
+## Como usar: 
+   - git clone este repositório
+   - pip install -r requirements.txt
+   - python ou python3(mac/linux) app.py
+
+## Criar um executável: 
+   - python setup.py build
+      - dentro da pasta build, entre em exe.win e execute o arquivo `app`
