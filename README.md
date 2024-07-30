@@ -23,5 +23,5 @@
 
 ## Tecnologias
 
-  `os` -> Para mexer com arquivos e caminhos
-  `rich` -> Para personalização do terminal
+  - `os` -> Para mexer com arquivos e caminhos
+  - `rich` -> Para personalização do terminal
