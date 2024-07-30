@@ -23,5 +23,5 @@
 
 ## Tecnologias
 
-  - `os` -> Para mexer com arquivos e caminhos
+  - `sqlite3` -> Armazenar os arquivos
   - `rich` -> Para personalização do terminal

@@ -1,27 +1,11 @@
-import os
 from tqdm import tqdm
 from time import sleep
-from pprint import pprint
-# Breve descrição do projeto:
-# Crie um programa em Python que permita ao usuário gerenciar uma lista de tarefas
-# diretamente no terminal.
-# O programa deve permitir adicionar, visualizar, marcar como concluídas e remover tarefas.
-# Para que as tarefas não sejam perdidas de um dia para o outro, todos dados devem ser salvos
-# em um banco de dados.
-# O programa deve ser entregue como um executável.
-# ○ Permitir ao usuário remover uma tarefa específica da lista.
-# 6. Salvar e Carregar Tarefas:
-# ○ Salvar a lista de tarefas em um arquivo para que elas possam ser carregadas na
-# próxima execução do programa.
-# 7. Ter a Persistência de dados
-# ○ Todos os dados que foram inseridos ou modificados pelo usuário devem ser
-# persistidos(ou seja, devem ser armazenados em algum local que não irá sumir
-# após o programa fechar)
+import sqlite3
 
 # Simulate a loading bar
-print("Carregando programa:")
-for _ in tqdm(range(100), desc="Loading", ncols=75):
-    sleep(0.05)
+# print("Carregando programa:")
+# for _ in tqdm(range(100), desc="Loading", ncols=75):
+#     sleep(0.05)
 
 
 RED = '\033[91m'
@@ -45,74 +29,58 @@ print(CYAN + BOLD + r'''
                            Programa Gerenciamento de Tarefas 
 ''' + RESET)
 
-task_dict = {}
+conn = sqlite3.connect('tasks.db')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tarefa TEXT NOT NULL,
+    descricao TEXT NOT NULL,
+    status TEXT NOT NULL
+);
+''')
 
 # Função para adicionar tarefas
-def add_task(task_dict):
-    task_id = len(task_dict) + 1
-    task = input("Digite a tarefa que deseja adicionar: ")
-    description = input("Digite a descrição da tarefa: ")
-    
-    task_dict[task_id] = {"Tarefa": task, "descrição": description, "status": "Pendente"}
-    
+def insert_task(task, description, status):
+    cursor.execute(f'''
+    INSERT INTO tasks (tarefa, descricao, status)
+    VALUES ('{task}', '{description}', '{status}')
+    ''')
+    conn.commit()
     print(GREEN + f"Tarefa '{task}' adicionada com sucesso!" + RESET)
     print(BLUE + "Descrição da tarefa: " + description + RESET)
-
-    return task_dict
- 
+    
 # Função para visualizar tarefas
-def view_task(task_dict):
-    print(CYAN + BOLD + "Tarefas:" + RESET)
-    if len(task_dict) == 0:
-        print(RED + "Nenhuma tarefa adicionada!" + RESET)
-        return task_dict
-      
-    for task_id, task in task_dict.items():
-        print(f"{task_id} - {task['Tarefa']}: {task['descrição']}")
-    print("\n")
+def view_tasks():
+    cursor.execute('''
+    SELECT * FROM tasks
+    ''')
+    tasks = cursor.fetchall()
+    print(CYAN + BOLD + "Tarefas Cadastradas:" + RESET)
+    for task in tasks:
+        print(f"ID: {task[0]} - Tarefa: {task[1]} - Descrição: {task[2]} - Status: {task[3]}")
+    return tasks
+# Função para marcar tarefa como concluída
+def mark_task_as_done(task_id):
+    cursor.execute(f'''
+    UPDATE tasks
+    SET status = 'Concluída'
+    WHERE id = {task_id}
+    ''')
+    conn.commit()
+    print(GREEN + f"Tarefa ID {task_id} marcada como concluída!" + RESET)
     
-    print(CYAN + BOLD + "Tarefas Concluídas:" + RESET)
-    for task_id, task in task_dict.items():
-        if task.get("status") == "Concluída":
-            print(f"{task_id} - {task['Tarefa']}: {task['descrição']}")
-    print("\n")
+# Função para remover tarefa
+def remove_task(task_id):
+    cursor.execute(f'''
+    DELETE FROM tasks
+    WHERE id = {task_id}
+    ''')
+    conn.commit()
+    print(RED + f"Tarefa ID {task_id} removida com sucesso!" + RESET)
     
-    print(CYAN + BOLD + "Tarefas Pendentes:" + RESET)
-    for task_id, task in task_dict.items():
-        if task["status"] != "Concluída":
-            print(f"{task_id} - {task['Tarefa']}: {task['descrição']}")
-    print("\n")
-    
-    
-    return task
-  
-# Função para marcar tarefas como concluídas 
-def mark_task_completed(task_dict):
-  
-    if len(task_dict) == 0:
-      print(RED + "Nenhuma tarefa adicionada!" + RESET)
-    else:  
-      view_task(task_dict)
-      task_id = int(input("Digite o ID da tarefa que deseja marcar como concluída: "))
-      task_dict[task_id]["status"] = "Concluída"
-      
-      print(GREEN + f"Tarefa '{task_dict[task_id]['Tarefa']}' marcada como concluída!" + RESET)
-    
-    return task_dict
-  
-# Função para marcar tarefas como pendentes
-def mark_task_pending(task_dict):
-    
-    if len(task_dict) == 0:
-      print(RED + "Nenhuma tarefa adicionada!" + RESET)
-    else:
-      view_task(task_dict)
-      task_id = int(input("Digite o ID da tarefa que deseja marcar como pendente: "))
-      task_dict[task_id]["status"] = "Pendente"
-      
-      print(YELLOW + f"Tarefa '{task_dict[task_id]['Tarefa']}' marcada como pendente!" + RESET)
-    
-    return task_dict
+
 
 while True:
     # 1.Menu de opções
@@ -120,23 +88,36 @@ while True:
     print("1 - Adicionar Tarefa")
     print("2 - Visualizar Tarefas")
     print("3 - Marcar Tarefa como Concluída")
-    print("4 - Marcar Tarefa como Pendente")
+    print("4 - Remover Tarefa")
     print("5 - Sair")
     
     option = input("Digite a opção desejada: ")
     
     if option == "1":
-        task_dict = add_task(task_dict)
+        task = input("Digite a tarefa: ")
+        description = input("Digite a descrição da tarefa: ")
+        status = "Pendente"
+        insert_task(task, description, status)
     elif option == "2":
-        view_task(task_dict)
+        view_tasks()
     elif option == "3":
-        task_dict = mark_task_completed(task_dict)
+        tasks = view_tasks()
+        if len(tasks) == 0:
+            print(YELLOW + "Não há tarefas cadastradas!" + RESET)
+            continue
+        task_id = input("Digite o ID da tarefa que deseja marcar como concluída: ")
+        mark_task_as_done(task_id)
     elif option == "4":
-        task_dict = mark_task_pending(task_dict)
+        tasks = view_tasks()
+        if len(tasks) == 0:
+            print(YELLOW + "Não há tarefas cadastradas!" + RESET)
+            continue
+        task_id = input("Digite o ID da tarefa que deseja remover: ")
+        remove_task(task_id)
     elif option == "5":
+        print(YELLOW + "Saindo do programa..." + RESET)
         break
     else:
-        print(RED + "Opção inválida! Por favor, digite uma opção válida." + RESET)
-    
+        print(RED + "Opção inválida!" + RESET)
     print("\n")
 
