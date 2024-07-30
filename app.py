@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS tasks (
 def insert_task(task, description, status):
     cursor.execute(f'''
     INSERT INTO tasks (tarefa, descricao, status)
-    VALUES ('{task}', '{description}', '{status}')
-    ''')
+    VALUES (?, ?, ?)
+    ''', (task, description, status))
     conn.commit()
     print(GREEN + f"Tarefa '{task}' adicionada com sucesso!" + RESET)
     print(BLUE + "Descrição da tarefa: " + description + RESET)
