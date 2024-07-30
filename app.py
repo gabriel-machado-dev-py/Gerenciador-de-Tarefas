@@ -1,4 +1,5 @@
 from tqdm import tqdm
+import os
 # from rich import print
 from rich.table import Table
 from rich.console import Console
@@ -53,6 +54,7 @@ def insert_task(task, description, status):
     conn.commit()
     print(GREEN + f"Tarefa '{task}' adicionada com sucesso!" + RESET)
     print(BLUE + "Descrição da tarefa: " + description + RESET)
+    
 
 # Função para visualizar tarefas
 def view_tasks():
@@ -108,13 +110,16 @@ def main_menu():
         option = input("Digite a opção desejada: \n")
         
         if option == "1":
+            os.system('cls' if os.name == 'nt' else 'clear')
             task = input("Digite a tarefa: ")
             description = input("Digite a descrição da tarefa: ")
             status = "Pendente"
             insert_task(task, description, status)
         elif option == "2":
+            os.system('cls' if os.name == 'nt' else 'clear')
             view_tasks()
         elif option == "3":
+            os.system('cls' if os.name == 'nt' else 'clear')
             tasks = view_tasks()
             if len(tasks) == 0:
                 print(YELLOW + "Não há tarefas cadastradas!" + RESET)
@@ -122,6 +127,7 @@ def main_menu():
             task_id = input("Digite o ID da tarefa que deseja marcar como concluída: ")
             mark_task_as_done(task_id)
         elif option == "4":
+            os.system('cls' if os.name == 'nt' else 'clear')
             tasks = view_tasks()
             if len(tasks) == 0:
                 print(YELLOW + "Não há tarefas cadastradas!" + RESET)
