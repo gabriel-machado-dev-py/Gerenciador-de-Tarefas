@@ -52,6 +52,7 @@ def insert_task(task, description, status):
     VALUES (?, ?, ?)
     ''', (task, description, status))
     conn.commit()
+    
     print(GREEN + f"Tarefa '{task}' adicionada com sucesso!" + RESET)
     print(BLUE + "Descrição da tarefa: " + description + RESET)
     
@@ -85,6 +86,7 @@ def mark_task_as_done(task_id):
     WHERE id = ?
     ''', (task_id,))
     conn.commit()
+    
     print(GREEN + f"Tarefa ID {task_id} marcada como concluída!" + RESET)
     
 # Função para remover tarefa
@@ -94,6 +96,7 @@ def remove_task(task_id):
     WHERE id = ?
     ''', (task_id,))
     conn.commit()
+    
     print(RED + f"Tarefa ID {task_id} removida com sucesso!" + RESET)
     
 
@@ -108,30 +111,39 @@ def main_menu():
         print("5 - Sair")
         
         option = input("Digite a opção desejada: \n")
-        
+        1
         if option == "1":
             os.system('cls' if os.name == 'nt' else 'clear')
+            
             task = input("Digite a tarefa: ")
             description = input("Digite a descrição da tarefa: ")
             status = "Pendente"
+            
             insert_task(task, description, status)
         elif option == "2":
             os.system('cls' if os.name == 'nt' else 'clear')
             view_tasks()
         elif option == "3":
-            os.system('cls' if os.name == 'nt' else 'clear')
             tasks = view_tasks()
+            
             if len(tasks) == 0:
                 print(YELLOW + "Não há tarefas cadastradas!" + RESET)
                 continue
+            
             task_id = input("Digite o ID da tarefa que deseja marcar como concluída: ")
             mark_task_as_done(task_id)
+            
+            os.system('cls' if os.name == 'nt' else 'clear')
+            
+            view_tasks()
         elif option == "4":
             os.system('cls' if os.name == 'nt' else 'clear')
+            
             tasks = view_tasks()
             if len(tasks) == 0:
                 print(YELLOW + "Não há tarefas cadastradas!" + RESET)
                 continue
+            
             task_id = input("Digite o ID da tarefa que deseja remover: ")
             remove_task(task_id)
         elif option == "5":
