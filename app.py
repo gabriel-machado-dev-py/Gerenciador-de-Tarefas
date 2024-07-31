@@ -149,6 +149,7 @@ def main_menu():
             
             task_id = input("Digite o ID da tarefa que deseja remover: ")
             remove_task(task_id)
+            view_tasks()
         elif option == "5":
             print(YELLOW + "Saindo do programa..." + RESET)
             print(YELLOW + "Até mais!" + RESET)
