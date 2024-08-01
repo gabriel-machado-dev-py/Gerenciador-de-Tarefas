@@ -5,7 +5,3 @@ machado
 # amb. de desenvolvimento
 tasks.db
 
-build/
-dist/
-*.egg-info/
-*.egg/
