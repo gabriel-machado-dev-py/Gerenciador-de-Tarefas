@@ -6,3 +6,5 @@ machado
 tasks.db
 
 build/
+dist/
+*.egg-info/
