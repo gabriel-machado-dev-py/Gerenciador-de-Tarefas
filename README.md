@@ -23,16 +23,17 @@
 
 ## Tecnologias
 
-  - `sqlite3` -> Armazenar os arquivos
-  - `rich` -> Para personalização do terminal
-  - `tqdm` -> Para personalização
-  - `os` -> Para limpar o terminal 
+- `sqlite3` -> Armazenar os arquivos
+- `rich` -> Para personalização do terminal
+- `tqdm` -> Para personalização
+- `os` -> Para limpar o terminal
 
+## Como usar:
 
-## Como usar: 
-   - git clone este repositório
-   - pip install -r requirements.txt
-   - python ou python3(mac/linux) app.py
+- git clone este repositório
+- pip install -r requirements.txt
+- python ou python3(mac/linux) app.py
 
 ## Rodar o executável
-   - apenas fazer o download e executa-ló.
+
+- apenas fazer o download do Gerenciador de Tarefas.exe e executa-ló.
