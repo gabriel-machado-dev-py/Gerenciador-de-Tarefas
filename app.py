@@ -24,24 +24,26 @@ for _ in tqdm(range(100), desc="Carregando", ncols=75):
     sleep(0.03)
     
 print(CYAN + BOLD + r'''
-                            ╔═══════════════════════════════════════════════════════════╗
-                            ║                                                           ║
-                            ║                                                           ║
-                            ║                                                           ║
-                            ║                    _____                                  ║
-                            ║   _|_|_|      _|__     _        _       |     |   \     / ║
-                            ║   _|    _|    _|  |    |        |       |      |   \   /  ║
-                            ║   _|    _|    _|__      |_    _|    +   |  ___|     \_/   ║
-                            ║   _|    _|    _|         |    |         |            |    ║
-                            ║   _|_|_|      -|__|       |__|           |           |    ║
-                            ║                                                           ║
-                            ║                                                           ║
-                            ║                                                           ║
-                            ║             Programa Gerenciador de Tarefas               ║
-                            ╚═══════════════════════════════════════════════════════════╝
+                █████████████████████████████████████████████████████████████
+                ████                                                   ████
+                ████                                                   ████
+                ████                                                   ████
+                ████                                                   ████
+                      ██████╗ ███████╗██╗   ██╗       ██████╗ ██╗   ██╗
+                      ██╔══██╗██╔════╝██║   ██║       ██╔══██╗╚██╗ ██╔╝
+                      ██║  ██║█████╗  ██║   ██║       ██████╔╝ ╚████╔╝ 
+                      ██║  ██║██╔══╝  ╚██╗ ██╔╝       ██╔═══╝   ╚██╔╝  
+                      ██████╔╝███████╗ ╚████╔╝     ██╗██║        ██║   
+                      ╚═════╝ ╚══════╝  ╚═══╝      ╚═╝╚═╝        ╚═╝ 
+                ████                                                   ████
+                ████                                                   ████
+                ████                                                   ████
+                ████             Bot Gerenciador de Tarefas            ████
+                █████████████████████████████████████████████████████████████
+                        
 ''' + RESET)
 
-print(CYAN + 'A programação é uma arte, assim como a pintura ou a escultura, que exige inspiração e criatividade para resolver problemas.' + RESET + '\n') 
+print(BLUE + BOLD + 'A programação é uma arte, assim como a pintura ou a escultura, que exige inspiração e criatividade para resolver problemas.' + RESET + '\n') 
 
 conn = sqlite3.connect('tasks.db')
 cursor = conn.cursor()
